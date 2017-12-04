@@ -43,7 +43,7 @@ namespace AdventOfCode2017
                 var values = line.Trim().Split(null);
 
                 // no duplicate values exist, if count is equal 
-                if (values.ToHashSet().Count == values.Length)
+                if (values.Distinct().Count() == values.Length)
                 {
                     validLines++;
                 }
@@ -103,10 +103,10 @@ namespace AdventOfCode2017
                 var values = line.Trim().Split(null);
 
                 // order chars in string alphabetically
-                var set = values.Select(v => string.Concat(v.OrderBy(c => c))).ToHashSet();
+                var set = values.Select(v => string.Concat(v.OrderBy(c => c))).Distinct();
 
                 // no duplicate values exist, if count is equal
-                if (set.Count == values.Length)
+                if (set.Count() == values.Length)
                 {
                     validLines++;
                 }
