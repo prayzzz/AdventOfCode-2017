@@ -5,7 +5,7 @@ using prayzzz.Common.Unit;
 namespace AdventOfCode2017
 {
     [TestClass]
-    public class Dec01Part1
+    public class Day01Part1
     {
         private const char ZeroChar = '0';
 
@@ -41,7 +41,7 @@ namespace AdventOfCode2017
         public void InverseCaptcha()
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day01.txt");
-            Console.WriteLine(Solve(input));
+            Console.WriteLine("Day01Part1: " + Solve(input));
         }
 
         private static int Solve(string input)
@@ -57,13 +57,13 @@ namespace AdventOfCode2017
                     sum += input[i] - ZeroChar;
                 }
             }
-            
+
             return sum;
         }
     }
 
     [TestClass]
-    public class Dec01Part2
+    public class Day01Part2
     {
         private const char ZeroChar = '0';
 
@@ -106,7 +106,7 @@ namespace AdventOfCode2017
         public void InverseCaptcha()
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day01.txt");
-            Console.WriteLine(Solve(input));
+            Console.WriteLine("Day01Part2: " + Solve(input));
         }
 
         private static int Solve(string input)

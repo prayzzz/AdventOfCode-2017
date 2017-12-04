@@ -6,7 +6,7 @@ using prayzzz.Common.Unit;
 namespace AdventOfCode2017
 {
     [TestClass]
-    public class Dec02Part1
+    public class Day02Part1
     {
         [TestMethod]
         public void Test1()
@@ -22,7 +22,7 @@ namespace AdventOfCode2017
         public void CorruptionChecksum()
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day02.txt");
-            Console.WriteLine(Solve(input));
+            Console.WriteLine("Day02Part1: " + Solve(input));
         }
 
         private static int Solve(string input)
@@ -32,26 +32,8 @@ namespace AdventOfCode2017
             var sum = 0;
             foreach (var line in lines)
             {
-                var values = line.Trim().Split(null);
-
-                var high = int.MinValue;
-                var low = int.MaxValue;
-                foreach (var valueStr in values)
-                {
-                    var value = int.Parse(valueStr);
-
-                    if (value > high)
-                    {
-                        high = value;
-                    }
-
-                    if (value < low)
-                    {
-                        low = value;
-                    }
-                }
-
-                sum += high - low;
+                var values = line.Trim().Split(null).Select(int.Parse).ToList();
+                sum += values.Max() - values.Min();
             }
 
             return sum;
@@ -59,7 +41,7 @@ namespace AdventOfCode2017
     }
 
     [TestClass]
-    public class Dec02Part2
+    public class Day02Part2
     {
         [TestMethod]
         public void Test1()
@@ -75,9 +57,10 @@ namespace AdventOfCode2017
         public void CorruptionChecksum()
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day02.txt");
-            Console.WriteLine(Solve(input));
+            Console.WriteLine("Day02Part2: " + Solve(input));
         }
 
+        // ReSharper disable once CompareOfFloatsByEqualityOperator
         private static int Solve(string input)
         {
             var lines = input.Trim().Split("\n");

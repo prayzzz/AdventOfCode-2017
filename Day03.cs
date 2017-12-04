@@ -10,43 +10,31 @@ namespace AdventOfCode2017
         [TestMethod]
         public void Test1()
         {
-            Assert.AreEqual(1, Solve(1));
+            Assert.AreEqual(0, Solve(1));
         }
 
         [TestMethod]
         public void Test2()
         {
-            Assert.AreEqual(1, Solve(2));
+            Assert.AreEqual(3, Solve(12));
         }
 
         [TestMethod]
         public void Test3()
         {
-            Assert.AreEqual(2, Solve(3));
+            Assert.AreEqual(2, Solve(23));
         }
 
         [TestMethod]
-        public void Test5()
+        public void Test4()
         {
-            Assert.AreEqual(4, Solve(4));
-        }
-
-        [TestMethod]
-        public void Test6()
-        {
-            Assert.AreEqual(5, Solve(5));
-        }
-
-        [TestMethod]
-        public void Test7()
-        {
-            Assert.AreEqual(10, Solve(6));
+            Assert.AreEqual(31, Solve(1024));
         }
 
         [TestMethod]
         public void SpiralMemory()
         {
-            Console.WriteLine(Solve(325489));
+            Console.WriteLine("Day03Part1: " + Solve(325489));
         }
 
         private int Solve(int input)
@@ -102,7 +90,7 @@ namespace AdventOfCode2017
         [TestMethod]
         public void SpiralMemory()
         {
-            Console.WriteLine(Solve(325489));
+            Console.WriteLine("Day03Part2: " + Solve(325489));
         }
 
         private static int Solve(int input)
