@@ -100,7 +100,7 @@ namespace AdventOfCode2017
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day09.txt");
             var result = Solve(input);
             Console.WriteLine("Day09Part2: " + result);
-            Assert.AreEqual(12396, result);
+            Assert.AreEqual(6346, result);
         }
 
         private int Solve(string input)
