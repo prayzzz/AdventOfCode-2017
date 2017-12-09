@@ -39,38 +39,36 @@ namespace AdventOfCode2017
             for (var i = 0; i < input.Length; i++)
             {
                 var c = input[i];
-                if (c == '{' && !isGarbage)
+
+                if (c == '!')
                 {
-                    activeStreams++;
-                    continue;
+                    // skip next char if canceled
+                    i++;
                 }
 
-                if (c == '}' && !isGarbage)
+                if (isGarbage)
                 {
-                    totalGroups += activeStreams;
-                    activeStreams--;
-                    continue;
-                }
-
-                if (c == '<')
-                {
-                    isGarbage = true;
-                    continue;
-                }
-
-                if (c == '>')
-                {
-                    // go backward to check for cancels
-                    var cancelCount = 0;
-                    for (var j = i - 1; j >= 0; j--)
-                    {
-                        if (input[j] != '!') break;
-                        cancelCount++;
-                    }
-
-                    if (cancelCount % 2 == 0)
+                    if (c == '>')
                     {
                         isGarbage = false;
+                    }
+                }
+                else
+                {
+                    if (c == '<')
+                    {
+                        isGarbage = true;
+                    }
+
+                    if (c == '{')
+                    {
+                        activeStreams++;
+                    }
+
+                    if (c == '}')
+                    {
+                        totalGroups += activeStreams;
+                        activeStreams--;
                     }
                 }
             }
@@ -108,61 +106,39 @@ namespace AdventOfCode2017
             input = input.Trim();
 
             var isGarbage = false;
-            var charCount = 0;
+            var garbageCharCount = 0;
             for (var i = 0; i < input.Length; i++)
             {
                 var c = input[i];
 
+                // skip next char if canceled
+                if (c == '!')
+                {
+                    i++;
+                    continue;
+                }
+                
                 if (isGarbage)
                 {
-                    if (c == '!')
-                    {
-                        continue;
-                    }
-
                     if (c == '>')
                     {
-                        if (!IsCharCanceled(input, i))
-                        {
-                            isGarbage = false;
-                        }
-
-                        continue;
+                        isGarbage = false;
                     }
-
-                    if (!IsCharCanceled(input, i))
+                    else
                     {
-                        charCount++;
+                        garbageCharCount++;
                     }
                 }
                 else
                 {
-                    if (c == '<' && !IsCharCanceled(input, i))
+                    if (c == '<')
                     {
                         isGarbage = true;
                     }
                 }
             }
 
-            return charCount;
-        }
-
-        private static bool IsCharCanceled(string input, int currentPosition)
-        {
-            var cancelCount = 0;
-            for (var j = currentPosition - 1; j >= 0; j--)
-            {
-                if (input[j] == '!')
-                {
-                    cancelCount++;
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return cancelCount % 2 == 1;
+            return garbageCharCount;
         }
     }
 }
