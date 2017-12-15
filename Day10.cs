@@ -63,22 +63,22 @@ namespace AdventOfCode2017
         [TestMethod]
         public void Test1()
         {
-            Assert.AreEqual("a2582a3a0e66e6e86e3812dcb672a272", Solve(""));
-            Assert.AreEqual("33efeb34ea91902bb2f59c9920caa6cd", Solve("AoC 2017"));
-            Assert.AreEqual("3efbe78a8d82f29979031a4aa0b16a9d", Solve("1,2,3"));
-            Assert.AreEqual("63960835bcdc130f0b66d7ff4f6a5a8e", Solve("1,2,4"));
+            Assert.AreEqual("a2582a3a0e66e6e86e3812dcb672a272", CreateKnotHash(""));
+            Assert.AreEqual("33efeb34ea91902bb2f59c9920caa6cd", CreateKnotHash("AoC 2017"));
+            Assert.AreEqual("3efbe78a8d82f29979031a4aa0b16a9d", CreateKnotHash("1,2,3"));
+            Assert.AreEqual("63960835bcdc130f0b66d7ff4f6a5a8e", CreateKnotHash("1,2,4"));
         }
 
         [TestMethod]
         public void StreamProcessing()
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day10.txt");
-            var result = Solve(input);
+            var result = CreateKnotHash(input);
             Console.WriteLine("Day10Part2: " + result);
             Assert.AreEqual("7adfd64c2a03a4968cf708d1b7fd418d", result);
         }
 
-        private string Solve(string input)
+        public string CreateKnotHash(string input)
         {
             var asciiLength = input.Trim().Select(c => (int) c).ToList();
             asciiLength.AddRange(new[] { 17, 31, 73, 47, 23 });
