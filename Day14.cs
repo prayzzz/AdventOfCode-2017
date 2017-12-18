@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,7 +13,7 @@ namespace AdventOfCode2017
         [TestMethod]
         public void Test()
         {
-            Assert.AreEqual(8108, Solve("flqrgnkx"));
+            Assert.AreEqual(1242, Solve("flqrgnkx"));
         }
 
         [TestMethod]
@@ -20,7 +21,7 @@ namespace AdventOfCode2017
         {
             var result = Solve("ffayrhll");
             Console.WriteLine("Day14Part1: " + result);
-            Assert.AreEqual(8190, result);
+            Assert.AreEqual(1134, result);
         }
 
         private int Solve(string input)
@@ -43,23 +44,48 @@ namespace AdventOfCode2017
             }
 
 
-            var ints = new int[128, 128];
-            var group = 0;
+            var groups = new int[128, 128];
+            var groupNr = 1;
+            
             for (var i = 0; i < lines.Count; i++)
+            for (var j = 0; j < lines[i].Length; j++)
             {
-                var line = lines[i];
-                for (var j = 0; j < line.Length; j++)
+                if (Mark(i, j, groupNr, groups, lines))
                 {
-                    var c = line[j];
-
-                    if (c == '0')
-                    {
-                        ints[i, j] = 0;
-                    }
+                    groupNr++;
                 }
             }
 
-            return lines.SelectMany(x => x).Count(x => x == '1');
+            return groupNr - 1;
+        }
+
+        private bool Mark(int i, int j, int groupNr, int[,] groups, IReadOnlyList<string> lines)
+        {
+            // outside range or group already assigned
+            if (i < 0 || i >= 128 || j < 0 || j >= 128 || groups[i, j] != 0)
+            {
+                return false;
+            }
+
+            var bit = lines[i][j];
+            if (bit == '0' )
+            {
+                return false;
+            }
+
+            if (bit == '1')
+            {
+                groups[i, j] = groupNr;
+
+                Mark(i + 1, j, groupNr, groups, lines);
+                Mark(i, j + 1, groupNr, groups, lines);
+                Mark(i - 1, j, groupNr, groups, lines);
+                Mark(i, j - 1, groupNr, groups, lines);
+
+                return true;
+            }
+
+            return false;
         }
     }
 }
