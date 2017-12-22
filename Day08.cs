@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using prayzzz.Common.Unit;
 
@@ -11,7 +10,7 @@ namespace AdventOfCode2017
     public class Day08Part1
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual(1, Solve(@"b inc 5 if a > 1
                                        a inc 1 if b < 5
@@ -87,7 +86,7 @@ namespace AdventOfCode2017
     public class Day08Part2
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual(10, Solve(@"b inc 5 if a > 1
                                         a inc 1 if b < 5

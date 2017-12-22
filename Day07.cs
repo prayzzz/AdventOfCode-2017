@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using prayzzz.Common.Unit;
@@ -12,7 +11,7 @@ namespace AdventOfCode2017
     public class Day07Part1
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual("tknk", Solve(@"pbga (66)
                                             xhth (57)
@@ -30,7 +29,7 @@ namespace AdventOfCode2017
         }
 
         [TestMethod]
-        public void MemoryReallocation()
+        public void RecursiveCircus()
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day07.txt");
             var result = Solve(input);
@@ -85,7 +84,7 @@ namespace AdventOfCode2017
     public class Day07Part2
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual(60, Solve(@"pbga (66)
                                         xhth (57)
@@ -103,7 +102,7 @@ namespace AdventOfCode2017
         }
 
         [TestMethod]
-        public void MemoryReallocation()
+        public void RecursiveCircus()
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day07.txt");
             var result = Solve(input);

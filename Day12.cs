@@ -10,7 +10,7 @@ namespace AdventOfCode2017
     public class Day12Part1
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual(6, Solve(@"0 <-> 2
                                        1 <-> 1
@@ -22,7 +22,7 @@ namespace AdventOfCode2017
         }
 
         [TestMethod]
-        public void StreamProcessing()
+        public void DigitalPlumber()
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day12.txt");
             var result = Solve(input);
@@ -66,7 +66,7 @@ namespace AdventOfCode2017
     public class Day12Part2
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual(2, Solve(@"0 <-> 2
                                        1 <-> 1
@@ -78,7 +78,7 @@ namespace AdventOfCode2017
         }
 
         [TestMethod]
-        public void StreamProcessing()
+        public void DigitalPlumber()
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day12.txt");
             var result = Solve(input);

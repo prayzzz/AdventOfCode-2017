@@ -9,7 +9,7 @@ namespace AdventOfCode2017
     public class Day02Part1
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             const string value = @"5 1 9 5
                                    7 5 3
@@ -44,7 +44,7 @@ namespace AdventOfCode2017
     public class Day02Part2
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             const string value = @"5 9 2 8
                                    9 4 7 3

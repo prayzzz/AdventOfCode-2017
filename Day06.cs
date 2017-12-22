@@ -10,7 +10,7 @@ namespace AdventOfCode2017
     public class Day06Part1
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual(5, Solve(@"0 2 7 0"));
         }
@@ -70,14 +70,9 @@ namespace AdventOfCode2017
     public class Day06Part2
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual(4, Solve(@"0 2 7 0"));
-        }
-
-        [TestMethod]
-        public void Test2()
-        {
             Assert.AreEqual(4, Solve(@"1 2 3 4"));
         }
 

@@ -10,31 +10,12 @@ namespace AdventOfCode2017
         private const char ZeroChar = '0';
 
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
-            var solve = Solve("1122");
-            Assert.AreEqual(3, solve);
-        }
-
-        [TestMethod]
-        public void Test2()
-        {
-            var solve = Solve("1111");
-            Assert.AreEqual(4, solve);
-        }
-
-        [TestMethod]
-        public void Test3()
-        {
-            var solve = Solve("1234");
-            Assert.AreEqual(0, solve);
-        }
-
-        [TestMethod]
-        public void Test4()
-        {
-            var solve = Solve("91212129");
-            Assert.AreEqual(9, solve);
+            Assert.AreEqual(3, Solve("1122"));
+            Assert.AreEqual(4, Solve("1111"));
+            Assert.AreEqual(0, Solve("1234"));
+            Assert.AreEqual(9, Solve("91212129"));
         }
 
         [TestMethod]
@@ -68,38 +49,13 @@ namespace AdventOfCode2017
         private const char ZeroChar = '0';
 
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
-            var solve = Solve("1212");
-            Assert.AreEqual(6, solve);
-        }
-
-        [TestMethod]
-        public void Test2()
-        {
-            var solve = Solve("1221");
-            Assert.AreEqual(0, solve);
-        }
-
-        [TestMethod]
-        public void Test3()
-        {
-            var solve = Solve("123425");
-            Assert.AreEqual(4, solve);
-        }
-
-        [TestMethod]
-        public void Test4()
-        {
-            var solve = Solve("123123");
-            Assert.AreEqual(12, solve);
-        }
-
-        [TestMethod]
-        public void Test5()
-        {
-            var solve = Solve("12131415");
-            Assert.AreEqual(4, solve);
+            Assert.AreEqual(6, Solve("1212"));
+            Assert.AreEqual(0, Solve("1221"));
+            Assert.AreEqual(4, Solve("123425"));
+            Assert.AreEqual(12, Solve("123123"));
+            Assert.AreEqual(4, Solve("12131415"));
         }
 
         [TestMethod]

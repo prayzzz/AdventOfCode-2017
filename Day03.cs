@@ -8,26 +8,11 @@ namespace AdventOfCode2017
     public class Day03Part1
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual(0, Solve(1));
-        }
-
-        [TestMethod]
-        public void Test2()
-        {
             Assert.AreEqual(3, Solve(12));
-        }
-
-        [TestMethod]
-        public void Test3()
-        {
             Assert.AreEqual(2, Solve(23));
-        }
-
-        [TestMethod]
-        public void Test4()
-        {
             Assert.AreEqual(31, Solve(1024));
         }
 
@@ -70,20 +55,10 @@ namespace AdventOfCode2017
     public class Day03Part2
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual(806, Solve(747));
-        }
-
-        [TestMethod]
-        public void Test2()
-        {
             Assert.AreEqual(133, Solve(122));
-        }
-
-        [TestMethod]
-        public void Test3()
-        {
             Assert.AreEqual(351, Solve(330));
         }
 

@@ -9,7 +9,7 @@ namespace AdventOfCode2017
     public class Day05Part1
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual(5, Solve(@"0
                                        3
@@ -53,7 +53,7 @@ namespace AdventOfCode2017
     public class Day05Part2
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual(10, Solve(@"0
                                         3
@@ -84,7 +84,7 @@ namespace AdventOfCode2017
 
                 var jumpWidth = jumps[i];
                 jumps[i] += jumpWidth >= 3 ? -1 : 1;
-                
+
                 jumpCount++;
                 i += jumpWidth;
             }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using Castle.DynamicProxy.Generators.Emitters.CodeBuilders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using prayzzz.Common.Unit;
 
@@ -10,7 +8,7 @@ namespace AdventOfCode2017
     public class Day11Part1
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual(3, Solve("ne,ne,ne"));
             Assert.AreEqual(0, Solve("ne,ne,sw,sw"));
@@ -22,7 +20,7 @@ namespace AdventOfCode2017
         }
 
         [TestMethod]
-        public void StreamProcessing()
+        public void HexEd()
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day11.txt");
             var result = Solve(input);
@@ -78,7 +76,7 @@ namespace AdventOfCode2017
     public class Day11Part2
     {
         [TestMethod]
-        public void StreamProcessing()
+        public void HexEd()
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day11.txt");
             var result = Solve(input);

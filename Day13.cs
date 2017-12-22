@@ -19,7 +19,7 @@ namespace AdventOfCode2017
         }
 
         [TestMethod]
-        public void StreamProcessing()
+        public void PacketScanners()
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day13.txt");
             var result = Solve(input);
@@ -88,7 +88,7 @@ namespace AdventOfCode2017
         }
 
         [TestMethod]
-        public void StreamProcessing()
+        public void PacketScanners()
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day13.txt");
             var result = Solve(input);

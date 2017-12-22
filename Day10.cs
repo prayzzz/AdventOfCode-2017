@@ -10,13 +10,13 @@ namespace AdventOfCode2017
     public class Day10Part1
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual(12, Solve("3, 4, 1, 5", 5));
         }
 
         [TestMethod]
-        public void StreamProcessing()
+        public void KnotHash()
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day10.txt");
             var result = Solve(input, 256);
@@ -61,7 +61,7 @@ namespace AdventOfCode2017
     public class Day10Part2
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual("a2582a3a0e66e6e86e3812dcb672a272", CreateKnotHash(""));
             Assert.AreEqual("33efeb34ea91902bb2f59c9920caa6cd", CreateKnotHash("AoC 2017"));
@@ -70,7 +70,7 @@ namespace AdventOfCode2017
         }
 
         [TestMethod]
-        public void StreamProcessing()
+        public void KnotHash()
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day10.txt");
             var result = CreateKnotHash(input);

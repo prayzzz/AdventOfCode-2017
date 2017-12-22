@@ -8,7 +8,7 @@ namespace AdventOfCode2017
     public class Day09Part1
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual(1, Solve("{}"));
             Assert.AreEqual(6, Solve("{{{}}}"));
@@ -81,7 +81,7 @@ namespace AdventOfCode2017
     public class Day09Part2
     {
         [TestMethod]
-        public void Test1()
+        public void Test()
         {
             Assert.AreEqual(0, Solve("<>"));
             Assert.AreEqual(17, Solve("<random characters>"));
@@ -117,7 +117,7 @@ namespace AdventOfCode2017
                     i++;
                     continue;
                 }
-                
+
                 if (isGarbage)
                 {
                     if (c == '>')
