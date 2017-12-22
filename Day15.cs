@@ -58,7 +58,7 @@ namespace AdventOfCode2017
         public void DuelingGenerators()
         {
             var result = Solve(618, 814);
-            Console.WriteLine("Day15Part1: " + result);
+            Console.WriteLine("Day15Part2: " + result);
             Assert.AreEqual(316, result);
         }
 
