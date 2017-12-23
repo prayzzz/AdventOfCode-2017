@@ -35,35 +35,34 @@ namespace AdventOfCode2017
             var moves = input.Trim().Split(',');
             foreach (var move in moves)
             {
-                if (move.StartsWith('s'))
+                switch (move[0])
                 {
-                    var spinCount = Convert.ToInt32(move.Substring(1));
-                    programs = programs.Skip(programs.Length - spinCount)
-                        .Concat(programs.Take(programs.Length - spinCount))
-                        .ToArray();
-                }
+                    case 's':
+                        programs.ShiftRight(int.Parse(move.Substring(1)));
+                        break;
+                    case 'x':
+                    {
+                        var swap = move.Substring(1).Split('/').Select(int.Parse).ToArray();
+                        var from = swap[0];
+                        var to = swap[1];
 
-                if (move.StartsWith("x"))
-                {
-                    var swap = move.Substring(1).Split('/').Select(int.Parse).ToArray();
-                    var from = swap[0];
-                    var to = swap[1];
+                        var tmp = programs[from];
+                        programs[from] = programs[to];
+                        programs[to] = tmp;
+                        break;
+                    }
+                    case 'p':
+                    {
+                        var swap = move.Substring(1).Split('/').Select(x => x[0]).ToArray();
 
-                    var tmp = programs[from];
-                    programs[from] = programs[to];
-                    programs[to] = tmp;
-                }
+                        var from = Array.IndexOf(programs, swap[0]);
+                        var to = Array.IndexOf(programs, swap[1]);
 
-                if (move.StartsWith("p"))
-                {
-                    var swap = move.Substring(1).Split('/').Select(char.Parse).ToArray();
-
-                    var from = Array.IndexOf(programs, swap[0]);
-                    var to = Array.IndexOf(programs, swap[1]);
-
-                    var tmp = programs[from];
-                    programs[from] = programs[to];
-                    programs[to] = tmp;
+                        var tmp = programs[from];
+                        programs[from] = programs[to];
+                        programs[to] = tmp;
+                        break;
+                    }
                 }
             }
 
@@ -92,53 +91,59 @@ namespace AdventOfCode2017
             }
 
             var moves = input.Trim().Split(',');
-            var seenPrograms = new Dictionary<string, int>();
+            var seen = new List<string>();
 
             for (var i = 0; i < 1000000000; i++)
             {
                 foreach (var move in moves)
                 {
-                    if (move.StartsWith('s'))
+                    switch (move[0])
                     {
-                        var spinCount = Convert.ToInt32(move.Substring(1));
-                        programs = programs.Skip(programs.Length - spinCount)
-                            .Concat(programs.Take(programs.Length - spinCount))
-                            .ToArray();
-                    }
+                        case 's':
+                            programs.ShiftRight(int.Parse(move.Substring(1)));
+                            break;
+                        case 'x':
+                        {
+                            var swap = move.Substring(1).Split('/').Select(int.Parse).ToArray();
+                            var from = swap[0];
+                            var to = swap[1];
 
-                    if (move.StartsWith("x"))
-                    {
-                        var swap = move.Substring(1).Split('/').Select(int.Parse).ToArray();
-                        var from = swap[0];
-                        var to = swap[1];
+                            var tmp = programs[from];
+                            programs[from] = programs[to];
+                            programs[to] = tmp;
+                            break;
+                        }
+                        case 'p':
+                        {
+                            var swap = move.Substring(1).Split('/').Select(x => x[0]).ToArray();
 
-                        var tmp = programs[from];
-                        programs[from] = programs[to];
-                        programs[to] = tmp;
-                    }
+                            var from = Array.IndexOf(programs, swap[0]);
+                            var to = Array.IndexOf(programs, swap[1]);
 
-                    if (move.StartsWith("p"))
-                    {
-                        var swap = move.Substring(1).Split('/').Select(char.Parse).ToArray();
-
-                        var from = Array.IndexOf(programs, swap[0]);
-                        var to = Array.IndexOf(programs, swap[1]);
-
-                        var tmp = programs[from];
-                        programs[from] = programs[to];
-                        programs[to] = tmp;
+                            var tmp = programs[from];
+                            programs[from] = programs[to];
+                            programs[to] = tmp;
+                            break;
+                        }
                     }
                 }
-                
+
                 var programmStr = new string(programs);
-                if (seenPrograms.ContainsKey(programmStr))
+                var seenIndex = seen.IndexOf(programmStr);
+                if (seenIndex < 0)
                 {
-                    break;
+                    seen.Add(programmStr);
                 }
-                seenPrograms[programmStr] = i + 1;
+                else
+                {
+                    var circleSize = seen.Count - seenIndex;
+                    var programmIndex = (1_000_000_000 % circleSize) - 1;
+
+                    return seen[programmIndex];
+                }
             }
 
-            return seenPrograms.Single(i => i.Value == 1000000000 % seenPrograms.Count).Key;
+            return "";
         }
     }
 }
