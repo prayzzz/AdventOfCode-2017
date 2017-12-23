@@ -21,10 +21,10 @@ namespace AdventOfCode2017
             Assert.AreEqual(577, result);
         }
 
-        private int Solve(BigInteger a, BigInteger b)
+        private int Solve(long a, long b)
         {
-            BigInteger aFactor = 16807;
-            BigInteger bFactor = 48271;
+            const long aFactor = 16807;
+            const long bFactor = 48271;
 
             var count = 0;
             for (var i = 0; i < 40_000_000; i++)
@@ -32,8 +32,8 @@ namespace AdventOfCode2017
                 a = (a * aFactor) % 2147483647;
                 b = (b * bFactor) % 2147483647;
 
-                var aBytes = a.ToByteArray();
-                var bBytes = b.ToByteArray();
+                var aBytes = BitConverter.GetBytes(a);
+                var bBytes = BitConverter.GetBytes(b);
                 
                 if (aBytes[0] == bBytes[0] && aBytes[1] == bBytes[1])
                 {
@@ -62,10 +62,10 @@ namespace AdventOfCode2017
             Assert.AreEqual(316, result);
         }
 
-        private int Solve(BigInteger a, BigInteger b)
+        private int Solve(long a, long b)
         {
-            BigInteger aFactor = 16807;
-            BigInteger bFactor = 48271;
+            const long aFactor = 16807;
+            const long bFactor = 48271;
 
             var count = 0;
             for (var i = 0; i < 5_000_000; i++)
@@ -80,8 +80,9 @@ namespace AdventOfCode2017
                     b = (b * bFactor) % 2147483647;
                 } while (b % 8 != 0);
 
-                var aBytes = a.ToByteArray();
-                var bBytes = b.ToByteArray();
+
+                var aBytes = BitConverter.GetBytes(a);
+                var bBytes = BitConverter.GetBytes(b);
 
                 if (aBytes[0] == bBytes[0] && aBytes[1] == bBytes[1])
                 {
