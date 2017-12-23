@@ -1,6 +1,6 @@
 ﻿namespace AdventOfCode2017
 {
-    public static class Extensions
+    public static class ArrayExtensions
     {
         public static void ShiftRight<T>(this T[] arr)
         {
