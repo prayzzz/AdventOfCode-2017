@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 using prayzzz.Common.Unit;
 
 namespace AdventOfCode2017
@@ -18,22 +14,6 @@ namespace AdventOfCode2017
         {
             Assert.AreEqual(12, Solve(@"../.# => ##./#../...
                                         .#./..#/### => #..#/..../..../#..#", 2));
-        }
-
-        [TestMethod]
-        public void TestSlice()
-        {
-            var picture = new[,]
-            {
-                {'a', 'a', 'a', 'c', 'c', 'c'},
-                {'a', 'a', 'a', 'c', 'c', 'c'},
-                {'a', 'a', 'a', 'c', 'c', 'c'},
-                {'b', 'b', 'b', 'd', 'd', 'd'},
-                {'b', 'b', 'b', 'd', 'd', 'd'},
-                {'b', 'b', 'b', 'd', 'd', 'd'},
-            };
-
-            Slice(picture, 3);
         }
 
         [TestMethod]
@@ -54,19 +34,37 @@ namespace AdventOfCode2017
             Assert.AreEqual(1956174, result);
         }
 
+        /// <summary>
+        /// Steps:
+        /// * Extend rule set with all allowed permuations (rotated, flipped)
+        /// * do enhancement iterations
+        /// ** cut array in slices of size 2 or 3
+        /// ** get enhancement for each slice and put it into a new picture
+        /// * count on pixel
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="iterations"></param>
+        /// <returns></returns>
         private int Solve(string input, int iterations)
         {
             var lines = input.Trim().Split("\n");
 
-            var rules = new Dictionary<string[], string[]>();
+            var rules = new Dictionary<string, char[,]>();
             foreach (var line in lines)
             {
                 var match = Regex.Match(line.Trim(), "^([\\.\\#\\/]+) => ([\\.\\#\\/]+)$");
 
-                var pattern = match.Groups[1].Value.Split('/').ToArray();
-                var enhancement = match.Groups[2].Value.Split('/').ToArray();
+                var pattern = Build2DCharArray(match.Groups[1].Value.Split('/'));
+                var enhancement = Build2DCharArray(match.Groups[2].Value.Split('/'));
 
-                rules.Add(pattern, enhancement);
+                for (var i = 0; i < 4; i++)
+                {
+                    rules.TryAdd(ToPatternString(pattern), enhancement);
+                    rules.TryAdd(ToPatternString(FlipHorizontal(pattern)), enhancement);
+                    rules.TryAdd(ToPatternString(FlipVertical(pattern)), enhancement);
+
+                    pattern = RotateRight(pattern);
+                }
             }
 
             var picture = new[,]
@@ -103,7 +101,80 @@ namespace AdventOfCode2017
             return count;
         }
 
-        private static char[,] Enhance(char[,] picture, int diff, Dictionary<string[], string[]> rules)
+        private static T[,] RotateRight<T>(T[,] arr)
+        {
+            var length = arr.GetUpperBound(0) + 1;
+            var rotated = new T[length, length];
+
+            for (var row = 0; row < length; row++)
+            for (var col = 0; col < length; col++)
+            {
+                rotated[row, col] = arr[arr.GetUpperBound(0) - col, row];
+            }
+
+
+            return rotated;
+        }
+
+        private static T[,] FlipVertical<T>(T[,] arr)
+        {
+            var length = arr.GetUpperBound(0) + 1;
+            var flipped = new T[length, length];
+
+            for (var row = 0; row < length; row++)
+            for (var col = 0; col < length; col++)
+            {
+                flipped[row, col] = arr[arr.GetUpperBound(0) - row, col];
+            }
+
+            return flipped;
+        }
+
+        private static T[,] FlipHorizontal<T>(T[,] arr)
+        {
+            var length = arr.GetUpperBound(0) + 1;
+            var flipped = new T[length, length];
+
+            for (var row = 0; row < length; row++)
+            for (var col = 0; col < length; col++)
+            {
+                flipped[row, col] = arr[row, arr.GetUpperBound(0) - col];
+            }
+
+            return flipped;
+        }
+
+        private static string ToPatternString(char[,] arr)
+        {
+            var str = "";
+
+            for (var i = 0; i < arr.GetUpperBound(0) + 1; i++)
+            {
+                for (var j = 0; j < arr.GetUpperBound(1) + 1; j++)
+                {
+                    str += arr[i, j];
+                }
+            }
+
+            return str;
+        }
+
+        private static char[,] Build2DCharArray(string[] strings)
+        {
+            var arr = new char[strings.Length, strings.Length];
+
+            for (var i = 0; i < strings.Length; i++)
+            {
+                for (var j = 0; j < strings.Length; j++)
+                {
+                    arr[i, j] = strings[i][j];
+                }
+            }
+
+            return arr;
+        }
+
+        private static char[,] Enhance(char[,] picture, int diff, Dictionary<string, char[,]> rules)
         {
             var slices = Slice(picture, diff);
 
@@ -113,162 +184,27 @@ namespace AdventOfCode2017
 
             for (var sliceIndex = 0; sliceIndex < slices.Count; sliceIndex++)
             {
-                var slice = slices[sliceIndex];
-
-                var matchedRules = rules.Where(x => Match(slice, x.Key)).ToList();
-
-                if (matchedRules.Count == 0 || matchedRules.Count > 1)
-                {
-                    throw new Exception();
-                }
-
+                var sliceStr = ToPatternString(slices[sliceIndex]);
+                var enhancement = rules[sliceStr];
+                var enhancementLength = enhancement.GetUpperBound(0) + 1;
+                
                 var slicesPerRow = (int) Math.Sqrt(slices.Count);
                 var rowOfSlice = sliceIndex / slicesPerRow;
                 var colOfSlice = sliceIndex % slicesPerRow;
 
-                var enhancement = matchedRules.First().Value;
-
-                for (var i = 0; i < enhancement.Length; i++)
+                for (var i = 0; i < enhancementLength; i++)
                 {
-                    var picRow = (rowOfSlice * enhancement.Length) + i;
+                    var picRow = (rowOfSlice * enhancementLength) + i;
 
-                    for (var j = 0; j < enhancement[i].Length; j++)
+                    for (var j = 0; j < enhancementLength; j++)
                     {
-                        var picCol = (colOfSlice * enhancement[i].Length) + j;
-                        newPicture[picRow, picCol] = enhancement[i][j];
+                        var picCol = (colOfSlice * enhancementLength) + j;
+                        newPicture[picRow, picCol] = enhancement[i, j];
                     }
                 }
             }
+
             return newPicture;
-        }
-
-        private static bool Match(char[,] slice, string[] pattern)
-        {
-            if (slice.GetUpperBound(0) != pattern.GetUpperBound(0))
-            {
-                return false;
-            }
-
-            var match = true;
-
-            // up left to bot right
-            for (var i = 0; i < pattern.GetUpperBound(0) + 1; i++)
-            {
-                for (var j = 0; j < pattern.GetUpperBound(0) + 1; j++)
-                {
-                    if (slice[i, j] != pattern[i][j])
-                    {
-                        match = false;
-                    }
-                }
-            }
-
-            if (match) return true;
-
-            match = true;
-            // up right to bot left FLIPPED
-            for (var i = 0; i < pattern.GetUpperBound(0) + 1; i++)
-            {
-                for (var j = 0; j < pattern.GetUpperBound(0) + 1; j++)
-                {
-                    if (slice[i, j] != pattern[j][i])
-                    {
-                        match = false;
-                    }
-                }
-            }
-
-            if (match) return true;
-
-            match = true;
-            // up right to bot left
-            for (var i = 0; i < pattern.GetUpperBound(0) + 1; i++)
-            {
-                for (var j = 0; j < pattern.GetUpperBound(0) + 1; j++)
-                {
-                    if (slice[i, j] != pattern[pattern.GetUpperBound(0) - i][j])
-                    {
-                        match = false;
-                    }
-                }
-            }
-
-            if (match) return true;
-
-            match = true;
-            // up right to bot left FLIPPED
-            for (var i = 0; i < pattern.GetUpperBound(0) + 1; i++)
-            {
-                for (var j = 0; j < pattern.GetUpperBound(0) + 1; j++)
-                {
-                    if (slice[i, j] != pattern[pattern.GetUpperBound(0) - j][i])
-                    {
-                        match = false;
-                    }
-                }
-            }
-
-            if (match) return true;
-
-            match = true;
-            // bot left to top right
-            for (var i = 0; i < pattern.GetUpperBound(0) + 1; i++)
-            {
-                for (var j = 0; j < pattern.GetUpperBound(0) + 1; j++)
-                {
-                    if (slice[i, j] != pattern[i][pattern.GetUpperBound(0) - j])
-                    {
-                        match = false;
-                    }
-                }
-            }
-
-            if (match) return true;
-
-            match = true;
-            // bot left to top right FLIPPED
-            for (var i = 0; i < pattern.GetUpperBound(0) + 1; i++)
-            {
-                for (var j = 0; j < pattern.GetUpperBound(0) + 1; j++)
-                {
-                    if (slice[i, j] != pattern[j][pattern.GetUpperBound(0) - i])
-                    {
-                        match = false;
-                    }
-                }
-            }
-
-            if (match) return true;
-
-            match = true;
-            // bot right to top left
-            for (var i = 0; i < pattern.GetUpperBound(0) + 1; i++)
-            {
-                for (var j = 0; j < pattern.GetUpperBound(0) + 1; j++)
-                {
-                    if (slice[i, j] != pattern[pattern.GetUpperBound(0) - i][pattern.GetUpperBound(0) - j])
-                    {
-                        match = false;
-                    }
-                }
-            }
-
-            if (match) return true;
-
-            match = true;
-            // bot right to top left FLIPPED
-            for (var i = 0; i < pattern.GetUpperBound(0) + 1; i++)
-            {
-                for (var j = 0; j < pattern.GetUpperBound(0) + 1; j++)
-                {
-                    if (slice[i, j] != pattern[pattern.GetUpperBound(0) - j][pattern.GetUpperBound(0) - i])
-                    {
-                        match = false;
-                    }
-                }
-            }
-
-            return match;
         }
 
         private static List<T[,]> Slice<T>(T[,] arr, int size)
