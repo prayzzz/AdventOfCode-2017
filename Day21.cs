@@ -21,7 +21,7 @@ namespace AdventOfCode2017
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day21.txt");
             var result = Solve(input, 5);
-            Console.WriteLine("Day20Part1: " + result);
+            Console.WriteLine("Day21Part1: " + result);
             Assert.AreEqual(152, result);
         }
 
@@ -30,22 +30,19 @@ namespace AdventOfCode2017
         {
             var input = TestHelper.ReadEmbeddedFile(GetType().Assembly, "Input.Day21.txt");
             var result = Solve(input, 18);
-            Console.WriteLine("Day20Part2: " + result);
+            Console.WriteLine("Day21Part2: " + result);
             Assert.AreEqual(1956174, result);
         }
 
         /// <summary>
         /// Steps:
-        /// * Extend rule set with all allowed permuations (rotated, flipped)
+        /// * Extend ruleset with all allowed permutations (rotated, flipped)
         /// * do enhancement iterations
         /// ** cut array in slices of size 2 or 3
         /// ** get enhancement for each slice and put it into a new picture
-        /// * count on pixel
+        /// * count active pixel
         /// </summary>
-        /// <param name="input"></param>
-        /// <param name="iterations"></param>
-        /// <returns></returns>
-        private int Solve(string input, int iterations)
+        private static int Solve(string input, int iterations)
         {
             var lines = input.Trim().Split("\n");
 
@@ -99,6 +96,39 @@ namespace AdventOfCode2017
             }
 
             return count;
+        }
+
+        private static char[,] Enhance(char[,] picture, int diff, Dictionary<string, char[,]> rules)
+        {
+            var slices = Slice(picture, diff);
+
+            var currentWidth = picture.GetUpperBound(0) + 1;
+            var newPictureLength = currentWidth + (currentWidth / diff);
+            var newPicture = new char[newPictureLength, newPictureLength];
+
+            for (var sliceIndex = 0; sliceIndex < slices.Count; sliceIndex++)
+            {
+                var sliceStr = ToPatternString(slices[sliceIndex]);
+                var enhancement = rules[sliceStr];
+                var enhancementLength = enhancement.GetUpperBound(0) + 1;
+                
+                var slicesPerRow = (int) Math.Sqrt(slices.Count);
+                var rowOfSlice = sliceIndex / slicesPerRow;
+                var colOfSlice = sliceIndex % slicesPerRow;
+
+                for (var i = 0; i < enhancementLength; i++)
+                {
+                    var picRow = (rowOfSlice * enhancementLength) + i;
+
+                    for (var j = 0; j < enhancementLength; j++)
+                    {
+                        var picCol = (colOfSlice * enhancementLength) + j;
+                        newPicture[picRow, picCol] = enhancement[i, j];
+                    }
+                }
+            }
+
+            return newPicture;
         }
 
         private static T[,] RotateRight<T>(T[,] arr)
@@ -174,56 +204,23 @@ namespace AdventOfCode2017
             return arr;
         }
 
-        private static char[,] Enhance(char[,] picture, int diff, Dictionary<string, char[,]> rules)
-        {
-            var slices = Slice(picture, diff);
-
-            var currentWidth = picture.GetUpperBound(0) + 1;
-            var newPictureLength = currentWidth + (currentWidth / diff);
-            var newPicture = new char[newPictureLength, newPictureLength];
-
-            for (var sliceIndex = 0; sliceIndex < slices.Count; sliceIndex++)
-            {
-                var sliceStr = ToPatternString(slices[sliceIndex]);
-                var enhancement = rules[sliceStr];
-                var enhancementLength = enhancement.GetUpperBound(0) + 1;
-                
-                var slicesPerRow = (int) Math.Sqrt(slices.Count);
-                var rowOfSlice = sliceIndex / slicesPerRow;
-                var colOfSlice = sliceIndex % slicesPerRow;
-
-                for (var i = 0; i < enhancementLength; i++)
-                {
-                    var picRow = (rowOfSlice * enhancementLength) + i;
-
-                    for (var j = 0; j < enhancementLength; j++)
-                    {
-                        var picCol = (colOfSlice * enhancementLength) + j;
-                        newPicture[picRow, picCol] = enhancement[i, j];
-                    }
-                }
-            }
-
-            return newPicture;
-        }
-
         private static List<T[,]> Slice<T>(T[,] arr, int size)
         {
             var rowLength = (int) Math.Sqrt(arr.Length);
             var parts = rowLength / size;
 
             var list = new List<T[,]>();
-            for (var partRow = 0; partRow < parts; partRow++)
-            for (var partCol = 0; partCol < parts; partCol++)
+            for (var row = 0; row < parts; row++)
+            for (var col = 0; col < parts; col++)
             {
                 var segment = new T[size, size];
 
                 for (var i = 0; i < size; i++)
                 {
-                    var partRowStart = partRow * size * rowLength;
-                    var partColStart = partCol * size;
+                    var rowStart = row * size * rowLength;
+                    var colStart = col * size;
 
-                    var start = (partRowStart + partColStart + i * rowLength);
+                    var start = rowStart + colStart + i * rowLength;
                     Array.Copy(arr, start, segment, i * size, size);
                 }
 
