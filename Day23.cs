@@ -17,7 +17,7 @@ namespace AdventOfCode2017
             Assert.AreEqual(5929, result);
         }
 
-        private int Solve(string input)
+        private static int Solve(string input)
         {
             var lines = input.Trim().Split("\n");
 
@@ -82,7 +82,9 @@ namespace AdventOfCode2017
         [TestMethod]
         public void CoprocessorConflagration()
         {
-            Assert.AreEqual(907, Solve(107900, 124900));
+            var result = Solve(107900, 124900);
+            Console.WriteLine("Day23Part2: " + result);
+            Assert.AreEqual(907, result);
         }
 
         /// <summary>
