@@ -35,12 +35,12 @@ namespace AdventOfCode2017
         }
 
         /// <summary>
-        /// Steps:
-        /// * Extend ruleset with all allowed permutations (rotated, flipped)
-        /// * do enhancement iterations
-        /// ** cut array in slices of size 2 or 3
-        /// ** get enhancement for each slice and put it into a new picture
-        /// * count active pixel
+        ///     Steps:
+        ///     * Extend ruleset with all allowed permutations (rotated, flipped)
+        ///     * do enhancement iterations
+        ///     ** cut array in slices of size 2 or 3
+        ///     ** get enhancement for each slice and put it into a new picture
+        ///     * count active pixel
         /// </summary>
         private static int Solve(string input, int iterations)
         {
@@ -66,9 +66,9 @@ namespace AdventOfCode2017
 
             var picture = new[,]
             {
-                {'.', '#', '.'},
-                {'.', '.', '#'},
-                {'#', '#', '#'}
+                { '.', '#', '.' },
+                { '.', '.', '#' },
+                { '#', '#', '#' }
             };
 
             for (var _ = 0; _ < iterations; _++)
@@ -111,7 +111,7 @@ namespace AdventOfCode2017
                 var sliceStr = ToPatternString(slices[sliceIndex]);
                 var enhancement = rules[sliceStr];
                 var enhancementLength = enhancement.GetUpperBound(0) + 1;
-                
+
                 var slicesPerRow = (int) Math.Sqrt(slices.Count);
                 var rowOfSlice = sliceIndex / slicesPerRow;
                 var colOfSlice = sliceIndex % slicesPerRow;
@@ -220,7 +220,7 @@ namespace AdventOfCode2017
                     var rowStart = row * size * rowLength;
                     var colStart = col * size;
 
-                    var start = rowStart + colStart + i * rowLength;
+                    var start = rowStart + colStart + (i * rowLength);
                     Array.Copy(arr, start, segment, i * size, size);
                 }
 

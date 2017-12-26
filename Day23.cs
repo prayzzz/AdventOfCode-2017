@@ -88,7 +88,7 @@ namespace AdventOfCode2017
         }
 
         /// <summary>
-        /// Counts all non-prime numbers between <paramref name="lowerLimit"/> and <paramref name="upperLimit"/>
+        ///     Counts all non-prime numbers between <paramref name="lowerLimit" /> and <paramref name="upperLimit" />
         /// </summary>
         private static long Solve(int lowerLimit, int upperLimit)
         {

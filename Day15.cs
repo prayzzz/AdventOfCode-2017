@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AdventOfCode2017
@@ -34,7 +33,7 @@ namespace AdventOfCode2017
 
                 var aBytes = BitConverter.GetBytes(a);
                 var bBytes = BitConverter.GetBytes(b);
-                
+
                 if (aBytes[0] == bBytes[0] && aBytes[1] == bBytes[1])
                 {
                     count++;

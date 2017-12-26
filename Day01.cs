@@ -73,7 +73,7 @@ namespace AdventOfCode2017
 
             for (var i = 0; i < input.Length; i++)
             {
-                var halfwayIndex = (i + input.Length / 2) % input.Length;
+                var halfwayIndex = (i + (input.Length / 2)) % input.Length;
                 if (input[i] == input[halfwayIndex])
                 {
                     sum += input[i] - ZeroChar;

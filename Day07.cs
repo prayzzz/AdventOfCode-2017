@@ -139,7 +139,8 @@ namespace AdventOfCode2017
         {
             var currentNode = tree[nodeName];
 
-            var childrenToSubTreeWeight = currentNode.Children.ToDictionary(childName => childName, childName => CalculateSubTreeWeight(tree, childName));
+            var childrenToSubTreeWeight =
+                currentNode.Children.ToDictionary(childName => childName, childName => CalculateSubTreeWeight(tree, childName));
 
             var groupedByWeight = childrenToSubTreeWeight.GroupBy(pair => pair.Value).ToList();
             var unbalanced = groupedByWeight.FirstOrDefault(pairs => pairs.Count() == 1);

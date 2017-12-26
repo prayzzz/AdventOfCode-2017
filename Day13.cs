@@ -52,7 +52,7 @@ namespace AdventOfCode2017
                 if (dictionary.TryGetValue(packetPos, out var depth))
                 {
                     var offset = picoSeconds % depth;
-                    var isMovingForward =  ((picoSeconds / depth) + 1) % 2 == 0;
+                    var isMovingForward = ((picoSeconds / depth) + 1) % 2 == 0;
                     var scannerDepth = isMovingForward ? depth - offset : 0 + offset;
 
                     // Packet always moves at depth 0 
@@ -122,7 +122,7 @@ namespace AdventOfCode2017
                     if (dictionary.TryGetValue(packetPos, out var depth))
                     {
                         var offset = picoSeconds % depth;
-                        var isMovingForward =  ((picoSeconds / depth) + 1) % 2 == 0;
+                        var isMovingForward = ((picoSeconds / depth) + 1) % 2 == 0;
                         var scannerDepth = isMovingForward ? depth - offset : 0 + offset;
 
                         // Packet always moves at depth 0 

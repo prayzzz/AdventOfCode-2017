@@ -110,7 +110,7 @@ namespace AdventOfCode2017
                 {
                     dictionary.Remove(i);
                 }
-                
+
                 counter++;
             }
 

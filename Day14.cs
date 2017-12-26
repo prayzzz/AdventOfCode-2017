@@ -61,7 +61,7 @@ namespace AdventOfCode2017
             return lines.SelectMany(x => x).Count(x => x == '1');
         }
     }
-    
+
     [TestClass]
     public class Day14Part2
     {
@@ -101,7 +101,7 @@ namespace AdventOfCode2017
 
             var groups = new int[128, 128];
             var groupNr = 1;
-            
+
             for (var i = 0; i < lines.Count; i++)
             for (var j = 0; j < lines[i].Length; j++)
             {
@@ -123,7 +123,7 @@ namespace AdventOfCode2017
             }
 
             var bit = lines[i][j];
-            if (bit == '0' )
+            if (bit == '0')
             {
                 return false;
             }

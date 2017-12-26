@@ -121,8 +121,8 @@ namespace AdventOfCode2017
         {
             var lines = input.Trim().Split('\n');
 
-            var registersA = new Dictionary<char, long> {{'p', 0}};
-            var registersB = new Dictionary<char, long> {{'p', 1}};
+            var registersA = new Dictionary<char, long> { { 'p', 0 } };
+            var registersB = new Dictionary<char, long> { { 'p', 1 } };
 
             var queueA = new Queue<long>();
             var queueB = new Queue<long>();
@@ -182,7 +182,7 @@ namespace AdventOfCode2017
         }
 
         private bool Exe(ref long index, string[] lines, Dictionary<char, long> registers,
-            Queue<long> rcvQ, Queue<long> sndQ)
+                         Queue<long> rcvQ, Queue<long> sndQ)
         {
             var instructions = lines[index].Trim().Split();
 

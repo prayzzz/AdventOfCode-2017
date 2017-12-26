@@ -81,7 +81,7 @@ namespace AdventOfCode2017
             }
         }
     }
-    
+
     [TestClass]
     public class Day08Part2
     {

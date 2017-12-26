@@ -25,7 +25,7 @@ namespace AdventOfCode2017
         {
             var pos = 0;
 
-            var buffer = new List<int> {0};
+            var buffer = new List<int> { 0 };
             for (var value = 1; value <= 2017; value++)
             {
                 pos = ((pos + stepWidth) % buffer.Count) + 1;
