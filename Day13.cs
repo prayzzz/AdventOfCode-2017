@@ -110,8 +110,10 @@ namespace AdventOfCode2017
                 dictionary.Add(layer, depth);
             }
 
+            var lastScannerPos = dictionary.Max(x => x.Key);
+            
             var delay = 0;
-
+            
             while (true)
             {
                 var caught = false;
@@ -132,7 +134,7 @@ namespace AdventOfCode2017
                         }
                     }
 
-                    if (caught || packetPos >= dictionary.Last().Key)
+                    if (caught || packetPos >= lastScannerPos)
                     {
                         break;
                     }
